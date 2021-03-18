@@ -1,1 +1,0 @@
-var json_TQ39_point_13 = {"type":"FeatureCollection","name":"TQ39_point_13","features":[]}
