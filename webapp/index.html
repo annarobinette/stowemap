@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="MobileOptimized" content="320"/>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta http-equiv="cleartype" content="on">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        .leaflet-popup-content {
+          min-width: 200px;
+          min-height: 100px;
+        }
+        </style>
+        <title>Stowe Framework Map</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/TQ_RoadTunnel_0.js"></script>
+        <script src="data/Railways_1.js"></script>
+        <script src="data/Railways_2.js"></script>
+        <script src="data/Water_3.js"></script>
+        <script src="data/Roads_4.js"></script>
+        <script src="data/Woodland_5.js"></script>
+        <script src="data/GreenSpace_6.js"></script>
+        <script src="data/Buildings_7.js"></script>
+        <script src="data/Border_8.js"></script>
+        <script src="data/TQ_Roundabout_9.js"></script>
+        <script src="data/TQ48_line_10.js"></script>
+        <script src="data/TQ38_line_11.js"></script>
+        <script src="data/TQ39_line_12.js"></script>
+        <script src="data/TQ39_point_13.js"></script>
+        <script src="data/Photos_14.js"></script>
+        <script>
+        var m2px = 1;
+        function newM2px() {
+            var centerLatLng = map.getCenter();
+            var pointC = map.latLngToContainerPoint(centerLatLng);
+            var pointX = [pointC.x + 100, pointC.y];
+
+            var latLngC = map.containerPointToLatLng(pointC);
+            var latLngX = map.containerPointToLatLng(pointX);
+
+            var distanceX = latLngC.distanceTo(latLngX)/100;
+
+            reciprocal = 1 / distanceX;
+            m2px = reciprocal;
+        }
+        function geoStyle(m) {
+            return Math.ceil(m * m2px);
+        }
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:26, minZoom:1
+        }).fitBounds([[51.56018879695039,-0.08572613253799939],[51.61751994433671,0.04764283224763136]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            map.setMaxBounds(map.getBounds());
+        }
+        function pop_TQ_RoadTunnel_0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_TQ_RoadTunnel_0_0() {
+            return {
+                pane: 'pane_TQ_RoadTunnel_0',
+                opacity: 1,
+                color: 'rgba(196,60,57,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_TQ_RoadTunnel_0');
+        map.getPane('pane_TQ_RoadTunnel_0').style.zIndex = 400;
+        map.getPane('pane_TQ_RoadTunnel_0').style['mix-blend-mode'] = 'normal';
+        var layer_TQ_RoadTunnel_0 = new L.geoJson(json_TQ_RoadTunnel_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TQ_RoadTunnel_0',
+            layerName: 'layer_TQ_RoadTunnel_0',
+            pane: 'pane_TQ_RoadTunnel_0',
+            onEachFeature: pop_TQ_RoadTunnel_0,
+            style: style_TQ_RoadTunnel_0_0,
+        });
+        bounds_group.addLayer(layer_TQ_RoadTunnel_0);
+        map.addLayer(layer_TQ_RoadTunnel_0);
+        function pop_Railways_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Railways_1_0() {
+            return {
+                pane: 'pane_Railways_1',
+                opacity: 1,
+                color: 'rgba(133,133,133,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        function style_Railways_1_1() {
+            return {
+                pane: 'pane_Railways_1',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Railways_1');
+        map.getPane('pane_Railways_1').style.zIndex = 401;
+        map.getPane('pane_Railways_1').style['mix-blend-mode'] = 'normal';
+        var layer_Railways_1 = new L.geoJson.multiStyle(json_Railways_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Railways_1',
+            layerName: 'layer_Railways_1',
+            pane: 'pane_Railways_1',
+            onEachFeature: pop_Railways_1,
+            styles: [style_Railways_1_0,style_Railways_1_1,]
+        });
+        bounds_group.addLayer(layer_Railways_1);
+        map.addLayer(layer_Railways_1);
+        function pop_Railways_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Railways_2_0() {
+            return {
+                pane: 'pane_Railways_2',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/transport_train_station2.svg',
+            iconSize: [22.799999999999997, 22.799999999999997]
+        }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Railways_2');
+        map.getPane('pane_Railways_2').style.zIndex = 402;
+        map.getPane('pane_Railways_2').style['mix-blend-mode'] = 'normal';
+        var layer_Railways_2 = new L.geoJson(json_Railways_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Railways_2',
+            layerName: 'layer_Railways_2',
+            pane: 'pane_Railways_2',
+            onEachFeature: pop_Railways_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Railways_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Railways_2);
+        map.addLayer(layer_Railways_2);
+        function pop_Water_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Water_3_0() {
+            return {
+                pane: 'pane_Water_3',
+                opacity: 1,
+                color: 'rgba(53,121,177,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'round',
+                weight: geoStyle(4.0),
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        function style_Water_3_1() {
+            return {
+                pane: 'pane_Water_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,206,227,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Water_3');
+        map.getPane('pane_Water_3').style.zIndex = 403;
+        map.getPane('pane_Water_3').style['mix-blend-mode'] = 'normal';
+        var layer_Water_3 = new L.geoJson.multiStyle(json_Water_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Water_3',
+            layerName: 'layer_Water_3',
+            pane: 'pane_Water_3',
+            onEachFeature: pop_Water_3,
+            styles: [style_Water_3_0,style_Water_3_1,]
+        });
+        bounds_group.addLayer(layer_Water_3);
+        map.addLayer(layer_Water_3);
+        function pop_Roads_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Roads_4_0(feature) {
+            switch(String(feature.properties['CLASSIFICA'])) {
+                case 'Minor Road, Collapsed Dual Carriageway':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(213,213,213,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Shared Use Carriageway':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(213,213,213,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Restricted Local Access Road':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(213,213,213,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(213,213,213,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Local Access Road':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(213,213,213,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Local Road':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(213,213,213,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Minor Road':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(213,213,213,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Primary Road, Collapsed Dual Carriageway':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(189,189,189,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Primary Road':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(189,189,189,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 6.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'A Road, Collapsed Dual Carriageway':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(179,179,179,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'B Road':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(179,179,179,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'B Road, Collapsed Dual Carriageway':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(179,179,179,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'A Road':
+                    return {
+                pane: 'pane_Roads_4',
+                opacity: 1,
+                color: 'rgba(179,179,179,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 8.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Roads_4');
+        map.getPane('pane_Roads_4').style.zIndex = 404;
+        map.getPane('pane_Roads_4').style['mix-blend-mode'] = 'normal';
+        var layer_Roads_4 = new L.geoJson(json_Roads_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Roads_4',
+            layerName: 'layer_Roads_4',
+            pane: 'pane_Roads_4',
+            onEachFeature: pop_Roads_4,
+            style: style_Roads_4_0,
+        });
+        bounds_group.addLayer(layer_Roads_4);
+        map.addLayer(layer_Roads_4);
+        function pop_Woodland_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Woodland_5_0() {
+            return {
+                pane: 'pane_Woodland_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(178,223,138,1.0)',
+                interactive: true,
+            }
+        }
+        function style_Woodland_5_1() {
+            return {
+                pane: 'pane_Woodland_5',
+                opacity: 1,
+                color: 'rgba(51,160,44,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        function style_Woodland_5_2() {
+            return {
+                pane: 'pane_Woodland_5',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Woodland_5');
+        map.getPane('pane_Woodland_5').style.zIndex = 405;
+        map.getPane('pane_Woodland_5').style['mix-blend-mode'] = 'normal';
+        var layer_Woodland_5 = new L.geoJson.multiStyle(json_Woodland_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Woodland_5',
+            layerName: 'layer_Woodland_5',
+            pane: 'pane_Woodland_5',
+            onEachFeature: pop_Woodland_5,
+            styles: [style_Woodland_5_0,style_Woodland_5_1,style_Woodland_5_2,]
+        });
+        bounds_group.addLayer(layer_Woodland_5);
+        map.addLayer(layer_Woodland_5);
+        function pop_GreenSpace_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_GreenSpace_6_0() {
+            return {
+                pane: 'pane_GreenSpace_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(178,223,138,1.0)',
+                interactive: true,
+            }
+        }
+        function style_GreenSpace_6_1() {
+            return {
+                pane: 'pane_GreenSpace_6',
+                opacity: 1,
+                color: 'rgba(51,160,44,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GreenSpace_6');
+        map.getPane('pane_GreenSpace_6').style.zIndex = 406;
+        map.getPane('pane_GreenSpace_6').style['mix-blend-mode'] = 'normal';
+        var layer_GreenSpace_6 = new L.geoJson.multiStyle(json_GreenSpace_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GreenSpace_6',
+            layerName: 'layer_GreenSpace_6',
+            pane: 'pane_GreenSpace_6',
+            onEachFeature: pop_GreenSpace_6,
+            styles: [style_GreenSpace_6_0,style_GreenSpace_6_1,]
+        });
+        bounds_group.addLayer(layer_GreenSpace_6);
+        map.addLayer(layer_GreenSpace_6);
+        function pop_Buildings_7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Buildings_7_0() {
+            return {
+                pane: 'pane_Buildings_7',
+                opacity: 1,
+                color: 'rgba(247,247,247,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(137,137,137,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Buildings_7');
+        map.getPane('pane_Buildings_7').style.zIndex = 407;
+        map.getPane('pane_Buildings_7').style['mix-blend-mode'] = 'normal';
+        var layer_Buildings_7 = new L.geoJson(json_Buildings_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Buildings_7',
+            layerName: 'layer_Buildings_7',
+            pane: 'pane_Buildings_7',
+            onEachFeature: pop_Buildings_7,
+            style: style_Buildings_7_0,
+        });
+        bounds_group.addLayer(layer_Buildings_7);
+        map.addLayer(layer_Buildings_7);
+        function pop_Border_8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Border_8_0() {
+            return {
+                pane: 'pane_Border_8',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Border_8');
+        map.getPane('pane_Border_8').style.zIndex = 408;
+        map.getPane('pane_Border_8').style['mix-blend-mode'] = 'normal';
+        var layer_Border_8 = new L.geoJson(json_Border_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Border_8',
+            layerName: 'layer_Border_8',
+            pane: 'pane_Border_8',
+            onEachFeature: pop_Border_8,
+            style: style_Border_8_0,
+        });
+        bounds_group.addLayer(layer_Border_8);
+        map.addLayer(layer_Border_8);
+        function pop_TQ_Roundabout_9(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_TQ_Roundabout_9_0() {
+            return {
+                pane: 'pane_TQ_Roundabout_9',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,178,151,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_TQ_Roundabout_9');
+        map.getPane('pane_TQ_Roundabout_9').style.zIndex = 409;
+        map.getPane('pane_TQ_Roundabout_9').style['mix-blend-mode'] = 'normal';
+        var layer_TQ_Roundabout_9 = new L.geoJson(json_TQ_Roundabout_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TQ_Roundabout_9',
+            layerName: 'layer_TQ_Roundabout_9',
+            pane: 'pane_TQ_Roundabout_9',
+            onEachFeature: pop_TQ_Roundabout_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_TQ_Roundabout_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_TQ_Roundabout_9);
+        map.addLayer(layer_TQ_Roundabout_9);
+        function pop_TQ48_line_10(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_TQ48_line_10_0() {
+            return {
+                pane: 'pane_TQ48_line_10',
+                opacity: 1,
+                color: 'rgba(231,113,72,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_TQ48_line_10');
+        map.getPane('pane_TQ48_line_10').style.zIndex = 410;
+        map.getPane('pane_TQ48_line_10').style['mix-blend-mode'] = 'normal';
+        var layer_TQ48_line_10 = new L.geoJson(json_TQ48_line_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TQ48_line_10',
+            layerName: 'layer_TQ48_line_10',
+            pane: 'pane_TQ48_line_10',
+            onEachFeature: pop_TQ48_line_10,
+            style: style_TQ48_line_10_0,
+        });
+        bounds_group.addLayer(layer_TQ48_line_10);
+        map.addLayer(layer_TQ48_line_10);
+        function pop_TQ38_line_11(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_TQ38_line_11_0() {
+            return {
+                pane: 'pane_TQ38_line_11',
+                opacity: 1,
+                color: 'rgba(183,72,75,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_TQ38_line_11');
+        map.getPane('pane_TQ38_line_11').style.zIndex = 411;
+        map.getPane('pane_TQ38_line_11').style['mix-blend-mode'] = 'normal';
+        var layer_TQ38_line_11 = new L.geoJson(json_TQ38_line_11, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TQ38_line_11',
+            layerName: 'layer_TQ38_line_11',
+            pane: 'pane_TQ38_line_11',
+            onEachFeature: pop_TQ38_line_11,
+            style: style_TQ38_line_11_0,
+        });
+        bounds_group.addLayer(layer_TQ38_line_11);
+        map.addLayer(layer_TQ38_line_11);
+        function pop_TQ39_line_12(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_TQ39_line_12_0() {
+            return {
+                pane: 'pane_TQ39_line_12',
+                opacity: 1,
+                color: 'rgba(232,113,141,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_TQ39_line_12');
+        map.getPane('pane_TQ39_line_12').style.zIndex = 412;
+        map.getPane('pane_TQ39_line_12').style['mix-blend-mode'] = 'normal';
+        var layer_TQ39_line_12 = new L.geoJson(json_TQ39_line_12, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TQ39_line_12',
+            layerName: 'layer_TQ39_line_12',
+            pane: 'pane_TQ39_line_12',
+            onEachFeature: pop_TQ39_line_12,
+            style: style_TQ39_line_12_0,
+        });
+        bounds_group.addLayer(layer_TQ39_line_12);
+        map.addLayer(layer_TQ39_line_12);
+        function pop_TQ39_point_13(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_TQ39_point_13_0() {
+            return {
+                pane: 'pane_TQ39_point_13',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_TQ39_point_13');
+        map.getPane('pane_TQ39_point_13').style.zIndex = 413;
+        map.getPane('pane_TQ39_point_13').style['mix-blend-mode'] = 'normal';
+        var layer_TQ39_point_13 = new L.geoJson(json_TQ39_point_13, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TQ39_point_13',
+            layerName: 'layer_TQ39_point_13',
+            pane: 'pane_TQ39_point_13',
+            onEachFeature: pop_TQ39_point_13,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_TQ39_point_13_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_TQ39_point_13);
+        map.addLayer(layer_TQ39_point_13);
+        function pop_Photos_14(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Photos_14_0() {
+            return {
+                pane: 'pane_Photos_14',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Photos_14');
+        map.getPane('pane_Photos_14').style.zIndex = 414;
+        map.getPane('pane_Photos_14').style['mix-blend-mode'] = 'normal';
+        var layer_Photos_14 = new L.geoJson(json_Photos_14, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Photos_14',
+            layerName: 'layer_Photos_14',
+            pane: 'pane_Photos_14',
+            onEachFeature: pop_Photos_14,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Photos_14_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Photos_14);
+        map.addLayer(layer_Photos_14);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>Stowe Framework Map</h2>';
+            };
+            title.addTo(map);
+        setBounds();
+        newM2px();
+
+            layer_Water_3.setStyle(style_Water_3_0);
+        map.on("zoomend", function(){
+            newM2px();
+
+            layer_Water_3.setStyle(style_Water_3_0);
+        });
+        </script>
+    </body>
+</html>
